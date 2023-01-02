@@ -1,6 +1,8 @@
 import { Dimensions, Image, SafeAreaView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
 import React, { useState } from 'react'
 
+import axios from 'axios'
+
 const height = Dimensions.get('window').height;
 const width = Dimensions.get('window').width;
 
@@ -15,7 +17,15 @@ export default function LoginScreen() {
   const [name, setname] = useState("")
   const [email, setemail] = useState("")
   const [password, setpassword] = useState("")
-  const [cpassword, setcpassword] = useState("")
+
+  const [islogin, setislogin] = useState(false)
+
+  const Submit = () => {
+    const data = { name, email, password }
+    axios.post('http://192.168.227.210:5000/api/login', data)
+      .then((data) => console.log('1 Data received' + setislogin(true)))
+    navigation.navigate('Home')
+  }
 
   return (
     <View style={styles.container}>
@@ -63,17 +73,7 @@ export default function LoginScreen() {
             />
             <Ionicons name="eye-outline" size={30} color='#EC5800' style={{ top: 8, }} />
           </View>
-          <View style={{ flexDirection: 'row' }}>
-            <Feather name="lock" size={30} color={(!cpassword) ? 'black' : '#EC5800'} style={{ top: 8, }} />
-            <TextInput
-              style={{ height: 50, width: width - 120, borderBottomColor: 'black', borderBottomWidth: 2, padding: 12, fontSize: 20, fontWeight: '600' }}
-              placeholder='Enter Conform Password'
-              value={cpassword}
-              onChangeText={(val) => { setcpassword(val) }}
-            />
-            <Ionicons name="eye-outline" size={30} color='#EC5800' style={{ top: 8, }} />
-          </View>
-          <TouchableOpacity style={{ height: 60, width: 1 / 2 * width, backgroundColor: '#EC5800', justifyContent: 'center', alignItems: 'center', borderRadius: 30 }} onPress={() => { navigation.navigate('Home') }}>
+          <TouchableOpacity style={{ height: 60, width: 1 / 2 * width, backgroundColor: '#EC5800', justifyContent: 'center', alignItems: 'center', borderRadius: 30 }} onPress={Submit}>
             <Text style={{ color: 'white', fontSize: 22, fontWeight: '600' }}>
               Log In
             </Text>

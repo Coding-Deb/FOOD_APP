@@ -1,6 +1,6 @@
 import { Dimensions, Image, SafeAreaView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
 import React, { useState } from 'react'
-
+import axios from 'axios'
 const height = Dimensions.get('window').height;
 const width = Dimensions.get('window').width;
 
@@ -12,12 +12,22 @@ import { Ionicons } from '@expo/vector-icons';
 
 
 export default function SignInScreen() {
-  const navigate = useNavigation()
+  const navigation = useNavigation()
 
   const [name, setname] = useState("")
   const [email, setemail] = useState("")
   const [password, setpassword] = useState("")
   const [cpassword, setcpassword] = useState("")
+
+  
+
+  const Submit = () => {
+    const data = { name, email, password, cpassword }
+    axios.post('http://192.168.227.210:5000/api/signin', data)
+      .then((data) => console.log('1 Data received'))
+
+      navigation.navigate('Login')
+  }
 
   return (
     <View style={styles.container}>
@@ -74,7 +84,7 @@ export default function SignInScreen() {
             <Ionicons name="eye-outline" size={30} color='#EC5800' style={{ top: 8, }} />
 
           </View>
-          <TouchableOpacity style={{ height: 60, width: 1 / 2 * width, backgroundColor: '#EC5800', justifyContent: 'center', alignItems: 'center', borderRadius: 30 }} onPress={() => { navigate.navigate('Login') }}>
+          <TouchableOpacity style={{ height: 60, width: 1 / 2 * width, backgroundColor: '#EC5800', justifyContent: 'center', alignItems: 'center', borderRadius: 30 }} onPress={Submit}>
             <Text style={{ color: 'white', fontSize: 22, fontWeight: '600' }}>
               Sign In
             </Text>
