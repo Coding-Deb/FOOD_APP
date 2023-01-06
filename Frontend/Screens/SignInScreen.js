@@ -23,7 +23,7 @@ export default function SignInScreen() {
 
   const Submit = () => {
     const data = { name, email, password, cpassword }
-    axios.post('http://192.168.227.210:5000/api/signin', data)
+    axios.post('http://192.168.105.210:5000/api/signin', data)
       .then((data) => console.log('1 Data received'))
 
       navigation.navigate('Login')

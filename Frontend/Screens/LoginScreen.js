@@ -18,12 +18,10 @@ export default function LoginScreen() {
   const [email, setemail] = useState("")
   const [password, setpassword] = useState("")
 
-  const [islogin, setislogin] = useState(false)
-
   const Submit = () => {
     const data = { name, email, password }
-    axios.post('http://192.168.227.210:5000/api/login', data)
-      .then((data) => console.log('1 Data received' + setislogin(true)))
+    axios.post('http://192.168.105.210:5000/api/login', data)
+      .then((data) => console.log('1 Data received' ))
     navigation.navigate('Home')
   }
 
