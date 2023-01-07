@@ -19,14 +19,16 @@ export default function SignInScreen() {
   const [password, setpassword] = useState("")
   const [cpassword, setcpassword] = useState("")
 
-  
+
 
   const Submit = () => {
     const data = { name, email, password, cpassword }
-    axios.post('http://192.168.105.210:5000/api/signin', data)
-      .then((data) => console.log('1 Data received'))
+    if (name.length < 10 && password === cpassword) {
+      axios.post('http://192.168.105.210:5000/api/signin', data)
+        .then((data) => console.log('1 Data received'))
 
       navigation.navigate('Login')
+    }
   }
 
   return (
@@ -93,7 +95,7 @@ export default function SignInScreen() {
             <Text style={{ fontSize: 18, fontWeight: '600' }}>
               Have Any Account ?
             </Text>
-            <TouchableOpacity onPress={() => { navigate.navigate('Login') }}>
+            <TouchableOpacity onPress={() => { navigation.navigate('Login') }}>
               <Text style={{ color: '#EC5800', fontSize: 18, fontWeight: '600', marginLeft: 15 }}>
                 Log In
               </Text>

@@ -2,6 +2,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
+import DetailScreen from './Screens/DetailScreen';
 import HomeScreen from './Screens/HomeScreen';
 import LoginScreen from './Screens/LoginScreen';
 import OnboardingScreen from './Screens/OnboardingScreen';
@@ -19,6 +20,7 @@ export default function App() {
         <Stack.Screen name='Login' component={LoginScreen} options={{ animation: 'slide_from_bottom' }} />
         <Stack.Screen name='SignIn' component={SignInScreen} options={{ animation: 'slide_from_bottom' }} />
         <Stack.Screen name='Home' component={HomeScreen} options={{ animation: 'slide_from_right' }} />
+        <Stack.Screen name='Details' component={DetailScreen} options={{ animation: 'slide_from_bottom' }} />
       </Stack.Navigator>
     </NavigationContainer>
   );

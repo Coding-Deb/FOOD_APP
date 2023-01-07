@@ -20,9 +20,11 @@ export default function LoginScreen() {
 
   const Submit = () => {
     const data = { name, email, password }
-    axios.post('http://192.168.105.210:5000/api/login', data)
-      .then((data) => console.log('1 Data received' ))
-    navigation.navigate('Home')
+    if (name.length < 10 && password && email) {
+      axios.post('http://192.168.105.210:5000/api/login', data)
+        .then((data) => console.log('1 Data received'))
+      navigation.navigate('Home', { Name: name })
+    }
   }
 
   return (
