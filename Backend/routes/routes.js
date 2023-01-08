@@ -1,5 +1,6 @@
 const express = require('express')
 const SignInModel = require('../models/signinmodel')
+const InputDataModel = require('../models/inputdata')
 
 const Route = express.Router()
 
@@ -13,7 +14,7 @@ Route.post('/login', (req, res) => {
             console.log('Matched Successfully');
         }
     })
-}) 
+})
 
 Route.post('/signin', (req, res) => {
     SignInModel.findOne({ email: req.body.email }).then(user => {
@@ -35,7 +36,27 @@ Route.post('/signin', (req, res) => {
     })
 })
 
+Route.post('/inputdata', (req, res) => {
+    const inputdata = new InputDataModel({
+        name: req.body.name,
+        type: req.body.type,
+        itemType: req.body.itemType,
+        price: req.body.price,
+    })
+    inputdata.save()
+        .then(data => res.json(data))
+        .catch(err => res.json(err))
+})
 
+const getData = async (req,res)=>{
+    try {
+        const result = await InputDataModel.find()
+        res.send(result)
+    } catch (error) {
+        console.log(err);
+    }
+} 
 
+Route.get('/inputdataapi', getData)
 
 module.exports = Route
