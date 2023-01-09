@@ -88,7 +88,7 @@ export default function SignInScreen() {
           </View>
           <TouchableOpacity style={{ height: 60, width: 1 / 2 * width, backgroundColor: '#EC5800', justifyContent: 'center', alignItems: 'center', borderRadius: 30 }} onPress={Submit}>
             <Text style={{ color: 'white', fontSize: 22, fontWeight: '600' }}>
-              Sign In
+              Register
             </Text>
           </TouchableOpacity>
           <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', width: width - 30 }}>

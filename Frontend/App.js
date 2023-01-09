@@ -9,6 +9,7 @@ import OnboardingScreen from './Screens/OnboardingScreen';
 import SignInScreen from './Screens/SignInScreen';
 import SplashScreen from './Screens/SplashScreen';
 import StateData from './Context/State';
+import FoodDetail from './Screens/FoodDetail';
 
 const Stack = createNativeStackNavigator()
 
@@ -23,6 +24,7 @@ export default function App() {
           <Stack.Screen name='SignIn' component={SignInScreen} options={{ animation: 'slide_from_bottom' }} />
           <Stack.Screen name='Home' component={HomeScreen} options={{ animation: 'slide_from_right' }} />
           <Stack.Screen name='Details' component={DetailScreen} options={{ animation: 'slide_from_bottom' }} />
+          <Stack.Screen name='FoodDetail' component={FoodDetail} options={{ animation: 'slide_from_right'}} />
         </Stack.Navigator>
       </NavigationContainer>
     </StateData>

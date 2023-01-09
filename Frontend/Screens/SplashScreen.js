@@ -36,7 +36,7 @@ export default function SplashScreen() {
           </TouchableOpacity>
           <TouchableOpacity style={{ backgroundColor: 'white', justifyContent: 'center', alignItems: 'center', borderRadius: 20, width: 1 / 3 * width, height: 65 }} onPress={() => { navigation.navigate('SignIn') }}>
             <Text style={{ fontSize: 20, fontWeight: '600', color: '#EC5800' }}>
-              Sign In
+              Register
             </Text>
           </TouchableOpacity>
         </View>
