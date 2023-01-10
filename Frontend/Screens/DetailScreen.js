@@ -1,4 +1,4 @@
-import { Dimensions, FlatList, Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { Dimensions, FlatList, Image, ScrollView, StyleSheet, Text, TouchableOpacity, View, ActivityIndicator } from 'react-native'
 import React, { useContext, useEffect, useState } from 'react'
 import { useNavigation, useRoute } from '@react-navigation/native'
 import axios from 'axios'
@@ -21,17 +21,22 @@ export default function DetailScreen() {
   const navigation = useNavigation()
   const { counter, Increase, Decrease } = useContext(Context)
   const [data, setdata] = useState([])
+  const [loading, setloading] = useState(true)
 
   useEffect(() => {
     async function getAllData() {
       try {
+        // setloading(true)
         const Data = await axios.get('http://192.168.105.210:5000/api/inputdataapi')
         setdata(Data.data)
+        setloading(false)
       } catch (error) {
+        setloading(false)
         console.log(error);
       }
     }
     getAllData()
+
   }, [])
 
   const loaddata = async () => {
@@ -66,13 +71,13 @@ export default function DetailScreen() {
               {route.params.name}
             </Text>
             <View style={{ alignItems: 'center' }}>
-              <View style={{ alignItems: 'center', flexDirection: 'row' ,justifyContent:'center'}}>
+              <View style={{ alignItems: 'center', flexDirection: 'row', justifyContent: 'center' }}>
                 <Ionicons name="md-checkmark-circle" size={20} color='green' />
                 <Text style={{ color: 'green', fontSize: 15, fontWeight: '700' }}>
                   Veg
                 </Text>
               </View>
-              <View style={{ alignItems: 'center', flexDirection: 'row' ,justifyContent:'center'}}>
+              <View style={{ alignItems: 'center', flexDirection: 'row', justifyContent: 'center' }}>
                 <Ionicons name="md-checkmark-circle" size={20} color='red' />
                 <Text style={{ color: 'red', fontSize: 15, fontWeight: '700' }}>
                   Non-Veg
@@ -86,45 +91,52 @@ export default function DetailScreen() {
               <FontAwesome name="refresh" size={30} color="#088F8F" />
             </TouchableOpacity>
           </View>
-          <FlatList
-            data={data}
-            renderItem={({ item }) => {
-              if (item.type==route.params.name) {
-                return (
-                  <View style={{ justifyContent: 'center', alignItems: 'center', marginBottom: 40 }}>
-                    {item.type == route.params.name ?
-                      <TouchableOpacity style={{ height: 100, width: width - 20, backgroundColor: 'white', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-around' }} onPress={() => navigation.navigate('FoodDetail', {
-                        name: item.name,
-                        price: item.price,
-                        itemType : item.itemType
-                      })}>
-                        <View>
-                          <Image
-                            source={require('../assets/Popular_Food/Pizzal.jpg')}
-                            style={{ height: 70, width: 70, borderRadius: 10, margin: 12 }}
-                          />
-                        </View>
-                        <View>
-                          <Text style={{ color: '#088F8F', fontSize: 20, fontWeight: '800' }}>
-                            {item.type == route.params.name ? item.name : null}
-                          </Text>
-                          <Text style={{ color: '#088F8F', fontSize: 15, fontWeight: '800' }}>
-                            Price: {item.type == route.params.name ? item.price : null}/-
-                          </Text>
-                        </View>
-                        <View style={{ alignItems: 'center', justifyContent: 'center' }}>
-                          <Ionicons name="md-checkmark-circle" size={30} color={item.itemType == "Veg" ? "green" : "red"} />
-                        </View>
-                      </TouchableOpacity>
-                      :
-                      null
-                    }
-                  </View>
-                )
+          {
+            loading ?
+              <View style={{ justifyContent: 'center', alignItems: 'center' ,height:1/2.5 * height ,width:width}}>
+                <ActivityIndicator size={70} color="#088F8F" />
+              </View>
+              :
+              <FlatList
+                data={data}
+                renderItem={({ item }) => {
+                  if (item.type == route.params.name) {
+                    return (
+                      <View style={{ justifyContent: 'center', alignItems: 'center', marginBottom: 40 }}>
+                        {item.type == route.params.name ?
+                          <TouchableOpacity style={{ height: 100, width: width - 20, backgroundColor: 'white', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-around' }} onPress={() => navigation.navigate('FoodDetail', {
+                            name: item.name,
+                            price: item.price,
+                            itemType: item.itemType
+                          })}>
+                            <View>
+                              <Image
+                                source={require('../assets/Popular_Food/Pizzal.jpg')}
+                                style={{ height: 70, width: 70, borderRadius: 10, margin: 12 }}
+                              />
+                            </View>
+                            <View>
+                              <Text style={{ color: '#088F8F', fontSize: 20, fontWeight: '800' }}>
+                                {item.type == route.params.name ? item.name : null}
+                              </Text>
+                              <Text style={{ color: '#088F8F', fontSize: 15, fontWeight: '800' }}>
+                                Price: {item.type == route.params.name ? item.price : null}/-
+                              </Text>
+                            </View>
+                            <View style={{ alignItems: 'center', justifyContent: 'center' }}>
+                              <Ionicons name="md-checkmark-circle" size={30} color={item.itemType == "Veg" ? "green" : "red"} />
+                            </View>
+                          </TouchableOpacity>
+                          :
+                          null
+                        }
+                      </View>
+                    )
 
-              }
-            }}
-          />
+                  }
+                }}
+              />
+          }
         </View>
       </View>
     </View>
