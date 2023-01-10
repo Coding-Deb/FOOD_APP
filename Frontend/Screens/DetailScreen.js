@@ -24,18 +24,19 @@ export default function DetailScreen() {
   const [loading, setloading] = useState(true)
 
   useEffect(() => {
-    async function getAllData() {
-      try {
-        // setloading(true)
-        const Data = await axios.get('http://192.168.105.210:5000/api/inputdataapi')
-        setdata(Data.data)
-        setloading(false)
-      } catch (error) {
-        setloading(false)
-        console.log(error);
+    setTimeout(() => {
+      async function getAllData() {
+        try {
+          const Data = await axios.get('http://192.168.105.210:5000/api/inputdataapi')
+          setdata(Data.data)
+          setloading(false)
+        } catch (error) {
+          setloading(false)
+          console.log(error);
+        }
       }
-    }
-    getAllData()
+      getAllData()
+    }, 500);
 
   }, [])
 
@@ -93,7 +94,7 @@ export default function DetailScreen() {
           </View>
           {
             loading ?
-              <View style={{ justifyContent: 'center', alignItems: 'center' ,height:1/2.5 * height ,width:width}}>
+              <View style={{ justifyContent: 'center', alignItems: 'center', height: 1 / 2.5 * height, width: width }}>
                 <ActivityIndicator size={70} color="#088F8F" />
               </View>
               :

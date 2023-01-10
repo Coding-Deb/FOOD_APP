@@ -1,4 +1,4 @@
-import { Dimensions, Image, SafeAreaView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
+import { ActivityIndicator, Dimensions, Image, SafeAreaView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
 import React, { useState } from 'react'
 
 import axios from 'axios'
@@ -18,12 +18,17 @@ export default function LoginScreen() {
   const [email, setemail] = useState("")
   const [password, setpassword] = useState("")
 
+  const [loading, setloading] = useState(false)
+
   const Submit = () => {
     const data = { name, email, password }
     if (name.length < 10 && password && email) {
       axios.post('http://192.168.105.210:5000/api/login', data)
         .then((data) => console.log('1 Data received'))
-      navigation.navigate('Home', { Name: name })
+        setloading(true)
+        setTimeout(() => {
+        navigation.navigate('Home', { Name: name })
+      }, 3000);
     }
   }
 
@@ -74,9 +79,19 @@ export default function LoginScreen() {
             <Ionicons name="eye-outline" size={30} color='#EC5800' style={{ top: 8, }} />
           </View>
           <TouchableOpacity style={{ height: 60, width: 1 / 2 * width, backgroundColor: '#EC5800', justifyContent: 'center', alignItems: 'center', borderRadius: 30 }} onPress={Submit}>
-            <Text style={{ color: 'white', fontSize: 22, fontWeight: '600' }}>
+            {/* <Text style={{ color: 'white', fontSize: 22, fontWeight: '600' }}>
               Log In
-            </Text>
+            </Text> */}
+            {
+              loading ?
+                <View>
+                  <ActivityIndicator size={40} color='#088F8F' />
+                </View>
+                :
+                <Text style={{ color: 'white', fontSize: 22, fontWeight: '600' }}>
+                  Log In
+                </Text>
+            }
           </TouchableOpacity>
           <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', width: width - 30 }}>
             <Text style={{ fontSize: 18, fontWeight: '600' }}>

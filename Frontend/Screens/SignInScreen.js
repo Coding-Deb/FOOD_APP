@@ -1,4 +1,4 @@
-import { Dimensions, Image, SafeAreaView, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
+import { ActivityIndicator, Dimensions, Image, SafeAreaView, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
 import React, { useState } from 'react'
 import axios from 'axios'
 const height = Dimensions.get('window').height;
@@ -19,15 +19,19 @@ export default function SignInScreen() {
   const [password, setpassword] = useState("")
   const [cpassword, setcpassword] = useState("")
 
-
+ 
+  const [loading, setloading] = useState(false)
 
   const Submit = () => {
     const data = { name, email, password, cpassword }
+    setloading(true)
     if (name.length < 10 && password === cpassword) {
       axios.post('http://192.168.105.210:5000/api/signin', data)
         .then((data) => console.log('1 Data received'))
-
-      navigation.navigate('Login')
+      setloading(true)
+      setTimeout(() => {
+        navigation.navigate('Login')
+      }, 3000);
     }
   }
 
@@ -43,6 +47,12 @@ export default function SignInScreen() {
             Food Plaza
           </Text>
         </View>
+        {/* {
+          loading ?
+            <View>
+              <ActivityIndicator size={60} color='#088F8F' />
+            </View>
+            : */}
         <ScrollView contentContainerStyle={{ backgroundColor: 'white', height: 1 / 1.5 * height, width: width - 30, alignItems: 'center', justifyContent: 'space-around', borderRadius: 30, }}>
           {/* <ScrollView contentContainerStyle={{justifyContent:'center'}}> */}
           <Text style={{ fontSize: 30, fontWeight: '600', color: '#EC5800', }}>
@@ -88,9 +98,16 @@ export default function SignInScreen() {
 
           </View>
           <TouchableOpacity style={{ height: 60, width: 1 / 2 * width, backgroundColor: '#EC5800', justifyContent: 'center', alignItems: 'center', borderRadius: 30 }} onPress={Submit}>
-            <Text style={{ color: 'white', fontSize: 22, fontWeight: '600' }}>
-              Register
-            </Text>
+            {
+              loading ?
+                <View>
+                  <ActivityIndicator size={40} color='#088F8F' />
+                </View>
+                :
+                <Text style={{ color: 'white', fontSize: 22, fontWeight: '600' }}>
+                  Register
+                </Text>
+            }
           </TouchableOpacity>
           <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', width: width - 30 }}>
             <Text style={{ fontSize: 18, fontWeight: '600' }}>
@@ -104,6 +121,14 @@ export default function SignInScreen() {
           </View>
           {/* </ScrollView> */}
         </ScrollView>
+        {/* {
+          loading ?
+            <View style={{}}>
+              <ActivityIndicator size={60} color='#088F8F' />
+            </View>
+            : null
+        } */}
+        {/* } */}
       </View>
     </View>
   )
