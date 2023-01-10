@@ -1,4 +1,4 @@
-import { Dimensions, Image, SafeAreaView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
+import { Dimensions, Image, SafeAreaView, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
 import React, { useState } from 'react'
 import axios from 'axios'
 const height = Dimensions.get('window').height;
@@ -34,7 +34,7 @@ export default function SignInScreen() {
   return (
     <View style={styles.container}>
       <View style={{ height: height, width: width, alignItems: 'center', justifyContent: 'center' }}>
-        <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center', marginBottom: 50 }}>
+        <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center', marginBottom: 40, marginTop: 50 }}>
           <Image
             source={require('../assets/Food2.jpg')}
             style={{ height: 80, width: 80, borderRadius: 30, marginRight: 10 }}
@@ -43,7 +43,8 @@ export default function SignInScreen() {
             Food Plaza
           </Text>
         </View>
-        <View style={{ backgroundColor: 'white', height: 1 / 1.5 * height, width: width - 30, alignItems: 'center', justifyContent: 'space-around', borderRadius: 30 }}>
+        <ScrollView contentContainerStyle={{ backgroundColor: 'white', height: 1 / 1.5 * height, width: width - 30, alignItems: 'center', justifyContent: 'space-around', borderRadius: 30, }}>
+          {/* <ScrollView contentContainerStyle={{justifyContent:'center'}}> */}
           <Text style={{ fontSize: 30, fontWeight: '600', color: '#EC5800', }}>
             Sign In
           </Text>
@@ -101,7 +102,8 @@ export default function SignInScreen() {
               </Text>
             </TouchableOpacity>
           </View>
-        </View>
+          {/* </ScrollView> */}
+        </ScrollView>
       </View>
     </View>
   )
