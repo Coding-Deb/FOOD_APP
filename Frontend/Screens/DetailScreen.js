@@ -3,6 +3,8 @@ import React, { useContext, useEffect, useState } from 'react'
 import { useNavigation, useRoute } from '@react-navigation/native'
 import axios from 'axios'
 
+import { Skeleton } from '@rneui/themed';
+
 const height = Dimensions.get('window').height;
 const width = Dimensions.get('window').width;
 
@@ -22,6 +24,7 @@ export default function DetailScreen() {
   const { counter, Increase, Decrease } = useContext(Context)
   const [data, setdata] = useState([])
   const [loading, setloading] = useState(true)
+  const [qty, setqty] = useState(0)
 
   useEffect(() => {
     setTimeout(() => {
@@ -36,13 +39,13 @@ export default function DetailScreen() {
         }
       }
       getAllData()
-    }, 500);
+    }, 1000);
 
   }, [])
 
   const loaddata = async () => {
     try {
-      const Data = await axios.get("http://192.168.105.210:5000/api/inputdata")
+      const Data = await axios.get("http://192.168.105.210:5000/api/inputdataapi")
       setdata(Data.data)
     } catch (error) {
       console.log(error);
@@ -52,6 +55,10 @@ export default function DetailScreen() {
   useEffect(() => {
     loaddata()
   }, [])
+
+  const showqty = () => {
+    setqty(qty++)
+  }
 
 
   return (
@@ -86,7 +93,7 @@ export default function DetailScreen() {
               </View>
             </View>
             <Text style={{ fontSize: 15, fontWeight: '700', margin: 20, color: '#088F8F', right: 5 }}>
-              {route.params.qty} items available
+              {qty} items available
             </Text>
             <TouchableOpacity style={{ right: 15 }} onPress={() => loaddata()}>
               <FontAwesome name="refresh" size={30} color="#088F8F" />
@@ -94,9 +101,12 @@ export default function DetailScreen() {
           </View>
           {
             loading ?
-              <View style={{ justifyContent: 'center', alignItems: 'center', height: 1 / 2.5 * height, width: width }}>
-                <ActivityIndicator size={70} color="#088F8F" />
-              </View>
+              <ScrollView contentContainerStyle={{ alignItems: 'center' }}>
+                <ActivityIndicator size={70} color="#088F8F" style={{ marginBottom: 40 }} />
+                <Skeleton animation="wave" width={width - 20} height={90} style={{ marginBottom: 40 }} />
+                <Skeleton animation="wave" width={width - 20} height={90} style={{ marginBottom: 40 }} />
+                <Skeleton animation="wave" width={width - 20} height={90} style={{ marginBottom: 40 }} />
+              </ScrollView>
               :
               <FlatList
                 data={data}
@@ -105,10 +115,12 @@ export default function DetailScreen() {
                     return (
                       <View style={{ justifyContent: 'center', alignItems: 'center', marginBottom: 40 }}>
                         {item.type == route.params.name ?
-                          <TouchableOpacity style={{ height: 100, width: width - 20, backgroundColor: 'white', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-around' }} onPress={() => navigation.navigate('FoodDetail', {
+                          <TouchableOpacity style={{ height: 120, width: width - 20, backgroundColor: 'white', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-around' }} onPress={() => navigation.navigate('FoodDetail', {
                             name: item.name,
                             price: item.price,
-                            itemType: item.itemType
+                            itemType: item.itemType,
+                            img: route.params.img,
+                            type: item.type
                           })}>
                             <View>
                               <Image
@@ -116,13 +128,20 @@ export default function DetailScreen() {
                                 style={{ height: 70, width: 70, borderRadius: 10, margin: 12 }}
                               />
                             </View>
-                            <View>
+                            <View style={{ width: 1 / 3 * width }}>
                               <Text style={{ color: '#088F8F', fontSize: 20, fontWeight: '800' }}>
                                 {item.type == route.params.name ? item.name : null}
                               </Text>
                               <Text style={{ color: '#088F8F', fontSize: 15, fontWeight: '800' }}>
                                 Price: {item.type == route.params.name ? item.price : null}/-
                               </Text>
+                              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                                <AntDesign name="star" size={24} color="#088F8F" />
+                                <AntDesign name="star" size={24} color="#088F8F" />
+                                <AntDesign name="star" size={24} color="#088F8F" />
+                                <AntDesign name="star" size={24} color="#088F8F" />
+                                <AntDesign name="star" size={24} color="#088F8F" />
+                              </View>
                             </View>
                             <View style={{ alignItems: 'center', justifyContent: 'center' }}>
                               <Ionicons name="md-checkmark-circle" size={30} color={item.itemType == "Veg" ? "green" : "red"} />

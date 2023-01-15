@@ -6,7 +6,10 @@ const StateData = (props) => {
     const [counter, setcounter] = useState(0)
 
     const Increase = () => {
-       setcounter(counter + 1)
+        if (counter === 10) {
+            return counter
+        }
+        setcounter(counter + 1)
     }
     const Decrease = () => {
         if (counter === 0) {

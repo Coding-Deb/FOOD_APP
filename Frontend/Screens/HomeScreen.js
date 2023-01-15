@@ -29,7 +29,9 @@ export default function HomeScreen() {
           <Text style={{ fontSize: 22, fontWeight: '700', color: 'white' }}>
             FOOD PLAZA
           </Text>
-          <TouchableOpacity style={{ left: 110, justifyContent: 'center', alignItems: 'center', flexDirection: 'row' }}>
+          <TouchableOpacity style={{ left: 110, justifyContent: 'center', alignItems: 'center', flexDirection: 'row' }} onPress={()=>{
+            navigation.navigate('Cart')
+          }}>
             <Ionicons name="cart-outline" size={35} color="white" />
             <View style={{ backgroundColor: 'yellow', borderRadius: 30, height: 28, width: 28, justifyContent: 'center', alignItems: 'center', bottom: 20, right: 7 }}>
               <Text style={{ fontSize: 15, fontWeight: '600', }}>

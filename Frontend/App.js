@@ -10,6 +10,8 @@ import SignInScreen from './Screens/SignInScreen';
 import SplashScreen from './Screens/SplashScreen';
 import StateData from './Context/State';
 import FoodDetail from './Screens/FoodDetail';
+import BuyScreen from './Screens/BuyScreen';
+import CartScreen from './Screens/CartScreen';
 
 const Stack = createNativeStackNavigator()
 
@@ -25,6 +27,8 @@ export default function App() {
           <Stack.Screen name='Home' component={HomeScreen} options={{ animation: 'slide_from_right' }} />
           <Stack.Screen name='Details' component={DetailScreen} options={{ animation: 'slide_from_bottom' }} />
           <Stack.Screen name='FoodDetail' component={FoodDetail} options={{ animation: 'slide_from_right'}} />
+          <Stack.Screen name='Buy' component={BuyScreen} options={{ animation: 'slide_from_bottom'}} />
+          <Stack.Screen name='Cart' component={CartScreen} options={{ animation: 'slide_from_right'}} />
         </Stack.Navigator>
       </NavigationContainer>
     </StateData>
